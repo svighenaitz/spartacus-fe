@@ -18,5 +18,10 @@ export default defineConfig({
   request: {
     dataField: '',
   },
-  proxy: proxy[REACT_APP_ENV || 'dev'],
+  esbuild:{},
+  webpack5:{},
+  mfsu:{},
+  define: {
+    API_ENV: REACT_APP_ENV || 'dev',
+  },
 });

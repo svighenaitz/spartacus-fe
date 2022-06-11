@@ -1,11 +1,12 @@
 // src/app.ts
 
 import { request } from "umi";
-import Cookies from 'js-cookie'
+import Cookies from 'js-cookie';
+import { getCurrentAPIUrl } from "./utils/utils";
 
 export async function getInitialState() {  
     if(Cookies.get('jwt')) return { jwt: Cookies.get('jwt')};
-    const login = await request(`/api/auth/local`, {
+    const login = await request(`${getCurrentAPIUrl()}/api/auth/local`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',

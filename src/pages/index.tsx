@@ -2,6 +2,7 @@ import styles from './index.less';
 import { useRequest, request, useModel } from 'umi';
 import { List, Avatar } from 'antd';
 import dayjs from 'dayjs'
+import { getCurrentAPIUrl } from '@/utils/utils';
 
 export interface Attributes {
   title: string;
@@ -18,7 +19,7 @@ export interface Post {
 export default function IndexPage() {
   const { initialState, loading: initialState_loading, error: initialState_error, refresh, setInitialState } = useModel('@@initialState');
   const { data, error, loading } = useRequest(() => {
-    return request(`/api/posts`, {
+    return request(`${getCurrentAPIUrl()}/api/posts`, {
       headers: {
         Authorization: `Bearer ${initialState.jwt}`,
       },
