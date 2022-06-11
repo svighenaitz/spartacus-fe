@@ -10,4 +10,4 @@ declare module '*.svg' {
 }
 
 declare const REACT_APP_ENV: 'test' | 'dev' | 'prod' | false;
-declare const API_ENV: any;
+declare const API_URL: any;

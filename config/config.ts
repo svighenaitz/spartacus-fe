@@ -1,7 +1,9 @@
 import { defineConfig } from 'umi';
 import proxy from './proxy';
 
-const { REACT_APP_ENV } = process.env;
+const { API_URL } = process.env;
+
+if(!API_URL) throw new Error("Attenzione, API_URL non definito!");
 
 export default defineConfig({
   nodeModulesTransform: {
@@ -22,6 +24,6 @@ export default defineConfig({
   webpack5:{},
   mfsu:{},
   define: {
-    API_ENV: REACT_APP_ENV || 'dev',
+    API_URL: API_URL || '/',
   },
 });
