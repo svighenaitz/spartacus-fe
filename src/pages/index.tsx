@@ -1,23 +1,46 @@
 import styles from './index.less';
-import { useRequest, request, useModel } from 'umi'
+import { useRequest, request, useModel } from 'umi';
+import { List, Avatar } from 'antd';
+import dayjs from 'dayjs'
 
+export interface Attributes {
+  title: string;
+  createdAt: Date;
+  updatedAt: Date;
+  publishedAt: Date;
+}
+
+export interface Post {
+  id: number;
+  attributes: Attributes;
+}
 
 export default function IndexPage() {
-  const { initialState, loading: initialState_loading , error: initialState_error, refresh, setInitialState } = useModel('@@initialState');
+  const { initialState, loading: initialState_loading, error: initialState_error, refresh, setInitialState } = useModel('@@initialState');
   const { data, error, loading } = useRequest(() => {
-    return request(`http://localhost:1337/api/posts`, { headers: {
-      Authorization: `Bearer ${initialState.jwt}`
-    } } );
-  }, { });
+    return request(`/api/posts`, {
+      headers: {
+        Authorization: `Bearer ${initialState.jwt}`,
+      },
+    });
+  }, {});
 
-  if (loading) {
-    return <div>loading...</div>;
-  }
-  if (error) {
-    return <div>{error}</div>;
-  }
-  return <div>
-      <h1 className={styles.title}>Results:</h1>      
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-    </div>  
+  return (
+    <div>
+      <h2>Posts:</h2>
+      <List
+        itemLayout="horizontal"
+        dataSource={data?.data}
+        renderItem={(item: Post) => (
+          <List.Item>
+            <List.Item.Meta
+              avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
+              title={<a href="https://ant.design">{item?.attributes?.title}</a>}
+              description={`Created at: ${dayjs(item?.attributes?.createdAt).format('DD/MM/YYYY HH:mm')}`}
+            />
+          </List.Item>
+        )}
+      />      
+    </div>
+  );
 }

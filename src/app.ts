@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 
 export async function getInitialState() {  
     if(Cookies.get('jwt')) return { jwt: Cookies.get('jwt')};
-    const login = await request(`http://localhost:1337/api/auth/local`, {
+    const login = await request(`/api/auth/local`, {
         method: 'POST',
         headers: {
             Accept: 'application/json',
